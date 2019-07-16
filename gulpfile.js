@@ -3,7 +3,8 @@
 var gulp = require("gulp"),
   gulpConcat = require("gulp-concat"),
   gulpUglify = require("gulp-uglify"),
-  gulpRename = require("gulp-rename");
+  gulpRename = require("gulp-rename"),
+  gulpSass = require("gulp-sass");
 
 // adding gulp simple hello task
 gulp.task("hello", function() {
@@ -27,6 +28,14 @@ gulp.task("minifyScripts", function() {
     .pipe(gulpUglify())
     .pipe(gulpRename("app.min.js"))
     .pipe(gulp.dest("js"));
+});
+
+// compile sass file to css file
+gulp.task("compileSass", function() {
+  gulp
+    .src(["scss/style1.scss", "scss/style2.scss"])
+    .pipe(gulpSass())
+    .pipe(gulp.dest("css"));
 });
 
 // adding gulp default task in parallel with devs task hello
