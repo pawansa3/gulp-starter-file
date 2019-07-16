@@ -25,16 +25,13 @@ gulp.task("concatScripts", function() {
 
 // gulp minify the app.js code
 // gulp rename the minified app.js into app.min.js
-gulp.task(
-  "minifyScripts",
-  gulp.series("concatScripts", function() {
-    return gulp
-      .src("js/app.js")
-      .pipe(gulpUglify())
-      .pipe(gulpRename("app.min.js"))
-      .pipe(gulp.dest("js"));
-  })
-);
+gulp.task("minifyScripts", gulp.series("concatScripts"), function() {
+  return gulp
+    .src("js/app.js")
+    .pipe(gulpUglify())
+    .pipe(gulpRename("app.min.js"))
+    .pipe(gulp.dest("js"));
+});
 
 // compile sass file to css file
 gulp.task("compileSass", function() {
@@ -51,13 +48,25 @@ gulp.task("watchSass", function() {
   gulp.watch(["scss/**/*.scss", "scss/*.scss"], gulp.parallel("compileSass"));
 });
 
+//build pipeline and development build to dist folder
+
+// creating dist folder task
+gulp.task("create-dist", function() {
+  return gulp
+    .src(
+      ["index.html", "css/*.css", "js/app.min.js", "images/**", "fonts/**"],
+      { base: "." }
+    )
+    .pipe(gulp.dest("dist"));
+});
+
 // creating build task
-gulp.task("build", gulp.parallel(["minifyScripts", "compileSass"]));
+gulp.task(
+  "build",
+  gulp.parallel(["minifyScripts", "compileSass", gulp.series("create-dist")])
+);
 
 // adding gulp default task in parallel with devs task hello
-gulp.task(
-  "default",
-  gulp.parallel("build", function() {
-    console.log("default task running!");
-  })
-);
+gulp.task("default", gulp.parallel("build"), function() {
+  console.log("default task running!");
+});
