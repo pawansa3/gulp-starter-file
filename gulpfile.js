@@ -2,7 +2,8 @@
 
 var gulp = require("gulp"),
   gulpConcat = require("gulp-concat"),
-  gulpUglify = require("gulp-uglify");
+  gulpUglify = require("gulp-uglify"),
+  gulpRename = require("gulp-rename");
 
 // adding gulp simple hello task
 gulp.task("hello", function() {
@@ -19,10 +20,12 @@ gulp.task("concatScripts", function() {
 });
 
 // gulp minify the app.js code
+// gulp rename the minified app.js into app.min.js
 gulp.task("minifyScripts", function() {
   gulp
     .src("js/app.js")
     .pipe(gulpUglify())
+    .pipe(gulpRename("app.min.js"))
     .pipe(gulp.dest("js"));
 });
 
