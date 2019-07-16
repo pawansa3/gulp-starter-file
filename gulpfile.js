@@ -4,7 +4,8 @@ var gulp = require("gulp"),
   gulpConcat = require("gulp-concat"),
   gulpUglify = require("gulp-uglify"),
   gulpRename = require("gulp-rename"),
-  gulpSass = require("gulp-sass");
+  gulpSass = require("gulp-sass"),
+  gulpMaps = require("gulp-sourcemaps");
 
 // adding gulp simple hello task
 gulp.task("hello", function() {
@@ -34,7 +35,9 @@ gulp.task("minifyScripts", function() {
 gulp.task("compileSass", function() {
   gulp
     .src(["scss/style1.scss", "scss/style2.scss"])
+    .pipe(gulpMaps.init())
     .pipe(gulpSass())
+    .pipe(gulpMaps.write("./"))
     .pipe(gulp.dest("css"));
 });
 
