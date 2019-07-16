@@ -1,7 +1,8 @@
 "use strict";
 
 var gulp = require("gulp"),
-  gulpConcat = require("gulp-concat");
+  gulpConcat = require("gulp-concat"),
+  gulpUglify = require("gulp-uglify");
 
 // adding gulp simple hello task
 gulp.task("hello", function() {
@@ -14,6 +15,14 @@ gulp.task("concatScripts", function() {
   gulp
     .src(["js/lib/lib1.js", "js/lib/lib2.js", "js/main.js"])
     .pipe(gulpConcat("app.js"))
+    .pipe(gulp.dest("js"));
+});
+
+// gulp minify the app.js code
+gulp.task("minifyScripts", function() {
+  gulp
+    .src("js/app.js")
+    .pipe(gulpUglify())
     .pipe(gulp.dest("js"));
 });
 
