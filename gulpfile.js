@@ -1,10 +1,20 @@
 "use strict";
 
-var gulp = require("gulp");
+var gulp = require("gulp"),
+  gulpConcat = require("gulp-concat");
 
 // adding gulp simple hello task
 gulp.task("hello", function() {
   console.log("hi there!");
+});
+
+// scripts to concat all js code into app.js
+gulp.task("concatScripts", function() {
+  console.log("concating all javascripts file into app.js");
+  gulp
+    .src(["js/lib/lib1.js", "js/lib/lib2.js", "js/main.js"])
+    .pipe(gulpConcat("app.js"))
+    .pipe(gulp.dest("js"));
 });
 
 // adding gulp default task in parallel with devs task hello
