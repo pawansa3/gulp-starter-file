@@ -15,7 +15,7 @@ gulp.task("hello", function() {
 // scripts to concat all js code into app.js
 //   console.log("concating all javascripts file into app.js");
 gulp.task("concatScripts", function() {
-  gulp
+  return gulp
     .src(["js/lib/lib1.js", "js/lib/lib2.js", "js/main.js"])
     .pipe(gulpMaps.init())
     .pipe(gulpConcat("app.js"))
@@ -25,17 +25,20 @@ gulp.task("concatScripts", function() {
 
 // gulp minify the app.js code
 // gulp rename the minified app.js into app.min.js
-gulp.task("minifyScripts", function() {
-  gulp
-    .src("js/app.js")
-    .pipe(gulpUglify())
-    .pipe(gulpRename("app.min.js"))
-    .pipe(gulp.dest("js"));
-});
+gulp.task(
+  "minifyScripts",
+  gulp.series("concatScripts", function() {
+    return gulp
+      .src("js/app.js")
+      .pipe(gulpUglify())
+      .pipe(gulpRename("app.min.js"))
+      .pipe(gulp.dest("js"));
+  })
+);
 
 // compile sass file to css file
 gulp.task("compileSass", function() {
-  gulp
+  return gulp
     .src(["scss/style1.scss", "scss/style2.scss"])
     .pipe(gulpMaps.init())
     .pipe(gulpSass())
@@ -43,10 +46,13 @@ gulp.task("compileSass", function() {
     .pipe(gulp.dest("css"));
 });
 
+//
+gulp.task("build", gulp.parallel(["minifyScripts", "compileSass"]));
+
 // adding gulp default task in parallel with devs task hello
 gulp.task(
   "default",
-  gulp.parallel("hello", function() {
+  gulp.parallel("build", function() {
     console.log("default task running!");
   })
 );
