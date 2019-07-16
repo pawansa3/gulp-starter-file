@@ -1,1 +1,0 @@
-{"version":3,"file":"style1.css","sources":["style1.scss"],"sourcesContent":[".style1 {\n  width: percentage(3/6);\n  background: #272727;\n  color: #fff;\n}\n"],"names":[],"mappings":"AAAA,AAAA,OAAO,CAAC;EACN,KAAK,EAAE,GAAe;EACtB,UAAU,EAAE,OAAO;EACnB,KAAK,EAAE,IAAI,GACZ"}
