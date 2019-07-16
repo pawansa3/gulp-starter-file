@@ -13,11 +13,13 @@ gulp.task("hello", function() {
 });
 
 // scripts to concat all js code into app.js
+//   console.log("concating all javascripts file into app.js");
 gulp.task("concatScripts", function() {
-  console.log("concating all javascripts file into app.js");
   gulp
     .src(["js/lib/lib1.js", "js/lib/lib2.js", "js/main.js"])
+    .pipe(gulpMaps.init())
     .pipe(gulpConcat("app.js"))
+    .pipe(gulpMaps.write("./"))
     .pipe(gulp.dest("js"));
 });
 
