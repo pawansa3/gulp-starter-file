@@ -46,7 +46,12 @@ gulp.task("compileSass", function() {
     .pipe(gulp.dest("css"));
 });
 
-//
+// creating watch task to check for file changes
+gulp.task("watchSass", function() {
+  gulp.watch(["scss/**/*.scss", "scss/*.scss"], gulp.parallel("compileSass"));
+});
+
+// creating build task
 gulp.task("build", gulp.parallel(["minifyScripts", "compileSass"]));
 
 // adding gulp default task in parallel with devs task hello
