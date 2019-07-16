@@ -48,8 +48,9 @@ gulp.task("compileSass", function() {
 });
 
 // creating watch task to check for file changes
-gulp.task("watchSass", function() {
+gulp.task("watchFiles", function() {
   gulp.watch(["scss/**/*.scss", "scss/*.scss"], gulp.parallel("compileSass"));
+  gulp.watch(["js/**/*.js"], gulp.parallel("concatScripts"));
 });
 
 //build pipeline and development build to dist folder
@@ -74,6 +75,9 @@ gulp.task("clean", function(done) {
   gulpDel(["dist", "css/*.css*", "js/app*.js*"]);
   done();
 });
+
+gulp.task("serve", gulp.parallel("watchFiles"));
+
 // adding gulp default task in parallel with devs task hello
 gulp.task(
   "default",
